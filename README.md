@@ -29,8 +29,8 @@
 
 ## 📌 Repositorios relacionados
 Este proyecto consta de dos partes principales:
-1. [API-REST-BoraBora-Kotlin](https://github.com/CarlosAcosta4/apirest-borabora-android-kotlin): Este es el repositorio de la API REST que proporciona los servicios backend para las aplicaciones.
-2. [AppBoraBora-Kotlin](https://github.com/brigittev0/AppBoraMovil): Este es el repositorio de la aplicación móvil que consume los servicios proporcionados por la API REST.
+1. [API-REST-BoraBora-Kotlin](https://github.com/RonalAlexanderEs/Pasteleria-Briseli-front-kotlin?tab=readme-ov-file): Este es el repositorio de la API REST que proporciona los servicios backend para las aplicaciones.
+2. [AppBoraBora-Kotlin](https://github.com/RonalAlexanderEs/appborabora-backend): Este es el repositorio de la aplicación móvil que consume los servicios proporcionados por la API REST.
 
 Para más información, por favor visita cada uno de los repositorios mencionados.
 
