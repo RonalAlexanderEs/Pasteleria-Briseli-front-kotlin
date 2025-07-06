@@ -49,40 +49,6 @@ Para más información, por favor visita cada uno de los repositorios mencionado
 
 <br>
 
-## 🚀 Pasos para la Ejecución
-1. Clona el repositorio del proyecto:
-```bash 
-https://github.com/brigittev0/AppBoraMovil
-```
-2. Abre el proyecto en Android Studio.
-3. Actualiza tu dirección IP en el archivo `util/Constants.kt`:
-    ```kotlin
-    object Constants {
-        //Base URL
-        const val BASE_URL = "http://<TU_IP>:8070/api/v1/"
-    }
-    ```
-    Reemplaza `<TU_IP>` con tu dirección IP.
-
-4. Actualiza tu dirección IP en el archivo `res/xml/network_security_config.xml`:
-    ```xml
-    <network-security-config>
-        <domain-config cleartextTrafficPermitted="true">
-            <domain includeSubdomains="true"><TU_IP></domain>
-        </domain-config>
-    </network-security-config>
-    ```
-    Reemplaza `<TU_IP>` con tu dirección IP.
-5. Compila y ejecuta la aplicación en un emulador o dispositivo físico.
-
-Por favor, verifica el cuadro de requerimientos y asegúrate de tener instalado todo lo que se menciona allí en tu entorno de desarrollo.
-
-<br>
-
-## ❗ Detalles Importantes del Proyecto
-- IDE Utilizado: Este proyecto fue desarrollado en Android Studio Giraffe, versión 2022.3.1. Es importante tener en cuenta esto al configurar tu entorno de desarrollo para trabajar en este proyecto."
-
-<br>
 
 <div align="center">
   
@@ -149,10 +115,3 @@ Por favor, verifica el cuadro de requerimientos y asegúrate de tener instalado 
 
 
 <br>
-
-## 💻 Autores
-<a href="https://github.com/CarlosAcosta4/apirest-borabora-android-kotlin/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=CarlosAcosta4/apirest-borabora-android-kotlin" />
-</a>
-
-<p align="right">(<a href="#readme-top">volver arriba</a>)</p>

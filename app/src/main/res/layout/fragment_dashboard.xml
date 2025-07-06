@@ -71,7 +71,7 @@
                 app:cardElevation="2dp"
                 app:cardUseCompatPadding="true">
 
-                <com.smarteist.autoimageslider.SliderView
+                <com.denzcoskun.imageslider.ImageSlider
                     android:id="@+id/svCarrusel"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"

@@ -30,6 +30,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -65,7 +66,7 @@ dependencies {
 
     // Una biblioteca de serialización/deserialización de Java para convertir objetos Java en JSON y viceversa.
     implementation ("com.google.code.gson:gson:2.8.9")
-    implementation ("com.google.code.gson:gson:2.8.8")
+
 
     // Una biblioteca de carga de imágenes para Android.
     implementation("com.github.bumptech.glide:glide:4.16.0")
@@ -85,7 +86,11 @@ dependencies {
     implementation ("com.github.f0ris.sweetalert:library:1.6.2")
 
     // Biblioteca para crear un deslizador de imágenes automático.
-    implementation ("com.github.smarteist:autoimageslider:1.3.9")
+    implementation("com.github.venky97vp:android-image-slider:1.1.0")
+
+    //--------Dependencias para denzcokun
+    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
+
 
     //--------Dependencias para integrar Niubiz
     implementation("com.android.support:multidex:1.0.3")

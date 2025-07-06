@@ -2,7 +2,6 @@ package pe.edu.idat.appborabora.view.fragments
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,20 +14,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
-import com.smarteist.autoimageslider.SliderAnimations
-import com.smarteist.autoimageslider.SliderView
+import com.denzcoskun.imageslider.ImageSlider
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import pe.edu.idat.appborabora.R
 import pe.edu.idat.appborabora.adapter.ProductoDashboardAdapter
-import pe.edu.idat.appborabora.slider.SliderItem
-import pe.edu.idat.appborabora.adapter.SliderAdapter
 import pe.edu.idat.appborabora.view.activities.Login
 import pe.edu.idat.appborabora.view.activities.RegisterUser
 import pe.edu.idat.appborabora.viewmodel.ProductoDashViewModel
 
 class Dashboard : Fragment(), View.OnClickListener {
 
-    private lateinit var sliderAdapter: SliderAdapter
     private lateinit var loginOption: RelativeLayout
     private lateinit var rvTopProductos: RecyclerView
     private lateinit var productoDashViewModel: ProductoDashViewModel
@@ -36,84 +32,56 @@ class Dashboard : Fragment(), View.OnClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
 
+        // UI
         loginOption = view.findViewById(R.id.loginOption)
         rvTopProductos = view.findViewById(R.id.rvTopProductos)
-        productoDashViewModel = ViewModelProvider(this).get(ProductoDashViewModel::class.java)
-
-        val btnlogindash = view.findViewById<Button>(R.id.btnlogindash)
-        val btncuenta = view.findViewById<Button>(R.id.btncuenta)
+        val btnlogindash: Button = view.findViewById(R.id.btnlogindash)
+        val btncuenta: Button = view.findViewById(R.id.btncuenta)
         btnlogindash.setOnClickListener(this)
         btncuenta.setOnClickListener(this)
 
-        val sliderView = view.findViewById<SliderView>(R.id.svCarrusel)
-        sliderAdapter = SliderAdapter(requireContext(), mutableListOf())
-        sliderView.setSliderAdapter(sliderAdapter)
+        // Carrusel con ImageSlider
+        val sliderView: ImageSlider = view.findViewById(R.id.svCarrusel)
+        val slideList = arrayListOf(
+            SlideModel(R.drawable.rul_img_02, ScaleTypes.FIT),
+            SlideModel(R.drawable.rul_img_04, ScaleTypes.FIT),
+            SlideModel(R.drawable.rul_img_05, ScaleTypes.FIT),
+            SlideModel(R.drawable.rul_img_03, ScaleTypes.FIT),
+            SlideModel(R.drawable.rul_img_01, ScaleTypes.FIT)
+        )
+        sliderView.setImageList(slideList) // ¡Listo! El carrusel se auto‑cicla solo
 
-        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM)
-        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
-        sliderView.autoCycleDirection = SliderView.AUTO_CYCLE_DIRECTION_RIGHT
-        sliderView.indicatorSelectedColor = Color.WHITE
-        sliderView.indicatorUnselectedColor = Color.GRAY
-        sliderView.scrollTimeInSec = 2
-        sliderView.isAutoCycle = true
-        sliderView.startAutoCycle()
-
-        loadData()
-
+        // ViewModel y productos top‑seller
+        productoDashViewModel = ViewModelProvider(this)[ProductoDashViewModel::class.java]
         rvTopProductos.layoutManager = LinearLayoutManager(requireContext())
         rvTopProductos.adapter = ProductoDashboardAdapter(requireContext())
-        productoDashViewModel.topSellingProducts.observe(viewLifecycleOwner, Observer { productList ->
-            (rvTopProductos.adapter as ProductoDashboardAdapter).setProductList(productList)
-        })
+        productoDashViewModel.topSellingProducts.observe(
+            viewLifecycleOwner,
+            Observer { products ->
+                (rvTopProductos.adapter as ProductoDashboardAdapter).setProductList(products)
+            }
+        )
 
         return view
     }
 
-
-    // Actualizacion de interfaz, segun inicio de sesion del usuario
+    // Mostrar u ocultar opción de login según JWT en SharedPreferences
     override fun onResume() {
         super.onResume()
-
-        val sharedPref = activity?.getSharedPreferences("UsuarioLogueado", Context.MODE_PRIVATE)
-        val token = sharedPref?.getString("jwt", null)
-
+        val prefs = activity?.getSharedPreferences("UsuarioLogueado", Context.MODE_PRIVATE)
+        val token = prefs?.getString("jwt", null)
         Log.d("DashboardFragment", "JWT: $token")
 
-        if (token == null) {
-            // El usuario no ha iniciado sesión, muestra la opción de inicio de sesión
-            loginOption.visibility = View.VISIBLE
-        } else {
-            // El usuario ha iniciado sesión, oculta la opción de inicio de sesión
-            loginOption.visibility = View.GONE
-        }
-    }
-
-    // Carrusel
-    private fun loadData() {
-        val lista = mutableListOf<SliderItem>(
-            SliderItem(R.drawable.rul_img_02),
-            SliderItem(R.drawable.rul_img_04),
-            SliderItem(R.drawable.rul_img_05),
-            SliderItem(R.drawable.rul_img_03),
-            SliderItem(R.drawable.rul_img_01)
-        )
-
-        sliderAdapter.renewItems(lista)
+        loginOption.visibility = if (token == null) View.VISIBLE else View.GONE
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.btnlogindash -> {
-                val intent = Intent(activity, Login::class.java)
-                startActivity(intent)
-            }
-            R.id.btncuenta -> {
-                val intent = Intent(activity, RegisterUser::class.java)
-                startActivity(intent)
-            }
+            R.id.btnlogindash -> startActivity(Intent(activity, Login::class.java))
+            R.id.btncuenta    -> startActivity(Intent(activity, RegisterUser::class.java))
         }
     }
 }
